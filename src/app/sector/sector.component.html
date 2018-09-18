@@ -1,0 +1,79 @@
+<div class="col-md-12">
+  <h3>{{tittle}}</h3>  
+  <div class="col-md-7">
+  <button class="btn btn-success" (click)="addNewSector();" >Agregar Sector</button>
+  </div>
+  <div class="col-md-7" *ngIf="showAddForm == 'true'">
+      <div class="alert alert-success" *ngIf="status=='Exito'">
+          Usuario actualizado correctamente
+        </div>
+        <div class="alert alert-danger" *ngIf="status =='Error'">
+          Usuario no actualizado
+        </div>
+    <h3>Agregar Sector</h3>
+    <form #formAddSector="ngForm" (ngSubmit)="onSubmit();">
+        <div class="form-group">
+            <label>Nombre tipo de sector</label>
+            <input type="text" class="form-control" name="name" #nombre="ngModel" [(ngModel)] ="sector.nombretiposector"  required>
+            <span class="alert alert-danger" *ngIf="!nombre.valid  && nombre.touched"> El nombre es obligatorio</span>
+        </div>
+          <div class="form-group">
+            <label>Descripción del tipo de sector</label>
+            <input type="text" class="form-control" name="descripcion" #descripcion="ngModel" [(ngModel)] ="sector.descripciontiposector" required>
+            <span class="alert alert-danger" *ngIf="!descripcion.valid  && descripcion.touched"> La descripción es obligatoria</span>
+          </div>
+          <div class="form-group">
+            <label>Código del tipo de sector</label>
+            <input type="number" class="form-control" name="codigo" #codigo="ngModel" [(ngModel)] ="sector.codigotiposector" required>
+            <span class="alert alert-danger" *ngIf="!codigo.valid  && codigo.touched"> El código del sector  es obligatorio</span>
+          </div>
+          <div class="form-group">
+            <label>Estado de sector activo ? 
+                <input type="checkbox" class="form-check-input" name="sectorActivo" #sectorActivo="ngModel" [(ngModel)] ="sector.tiposectoractivo" >
+
+            </label>
+          </div>
+          <input type="submit" class="btn btn-success lm-auto" value="Guardar" [disabled]="!formAddSector.form.valid">
+          <input type="button" class="btn btn-success rigth" (click)="resetForm(formAddSector);" value="Cancelar">
+
+                   
+    </form>
+    
+  </div>
+  <div class="col-md-8" *ngIf="showAddForm == 'false'">
+      <div class="alert alert-success" *ngIf="status=='success'">
+          Usuario eliminado correctamente
+        </div>
+        <div class="alert alert-danger" *ngIf="status =='error'">
+          Usuario no eliminado
+        </div>
+      <table class="table">
+          <tr>
+            <td>
+              Nombre Tipo de Sector
+            </td>
+            <td>
+              Descripción tipo de sector
+            </td>
+            <td>
+              Tipo sector
+              Activo/Desactivado
+            </td>
+            <td>
+              Acciones
+            </td>
+          </tr>
+          <tr *ngFor="let sector of sectors">
+            <td>{{sector.nombretiposector}}</td>
+            <td>{{sector.descripciontiposector}}</td>
+            <td>{{sector.tiposectoractivo}}</td>
+            <td>
+              <a (click)="editSector(sector)" > <span class="glyphicon glyphicon-pencil"></span></a>
+              <a (click)="removeSector(sector)" > <span class="glyphicon glyphicon-trash"></span></a>
+              <a (click)="desactivateSector(sector)" > <span class="glyphicon glyphicon-ban-circle"></span></a>
+            </td>
+          </tr>
+        </table>
+  </div>
+  
+</div>
